@@ -14,17 +14,18 @@ namespace TP4_Diseño
             Actividad actividadTres = new Actividad("enfermero");
             CargarListas.actividadesAutorizadas.Add(actividadTres);
 
-            //Creacion de objetos persona. Agrega a la lista todas las personas.
-            Persona personaUno = new Persona("Pepito Martinez", "67890098", "domicilioUno", "telefonoUno", "emailUno", actividadUno, DateTime.Parse("19/05/2021"));
-            CargarListas.personas.Add(personaUno);
-            Persona personaDos = new Persona("Fulanito DeTal", "98765432", "domicilioDos", "telefonoDos", "emailDos", actividadDos, DateTime.Parse("24/05/2021"));
-            CargarListas.personas.Add(personaDos);
-            Persona personaTres = new Persona("Susana Lopez", "96765430", "domicilioTres", "telefonoTres", "emailTres", actividadTres,DateTime.Parse("25/05/2021"));
-            CargarListas.personas.Add(personaTres);
-
             //Creacion de objetos empresa.
             Empresa empresaUno = new Empresa("EmpresaUno", "100", "DomicilioUno", "LocalidadUno", "emailUno", "telefonoUno", actividadUno);
             Empresa empresaDos = new Empresa("EmpresaDos", "200", "DomicilioDos", "LocalidadDos", "emailDos", "telefonoDos", actividadTres);
+            Empresa empresaTres = new Empresa("EmpresaTres", "300", "DomicilioTres", "LocalidadTres", "emailTres", "telefonoTres", actividadDos);
+
+            //Creacion de objetos persona. Agrega a la lista todas las personas.
+            Persona personaUno = new Persona("Pepito Martinez", "67890098", "domicilioUno", "telefonoUno", "emailUno", actividadUno, DateTime.Parse("19/05/2021"), empresaUno);
+            CargarListas.personas.Add(personaUno);
+            Persona personaDos = new Persona("Fulanito DeTal", "98765432", "domicilioDos", "telefonoDos", "emailDos", actividadDos, DateTime.Parse("24/05/2021"), empresaTres);
+            CargarListas.personas.Add(personaDos);
+            Persona personaTres = new Persona("Susana Lopez", "96765430", "domicilioTres", "telefonoTres", "emailTres", actividadTres,DateTime.Parse("25/05/2021"), empresaDos);
+            CargarListas.personas.Add(personaTres);
 
             //Muestra la lista con todas las personas que quieren acceder al area. (no se verifico aun).
             Console.WriteLine("\nLISTA DE PERSONAS:\n");
@@ -43,6 +44,8 @@ namespace TP4_Diseño
             //Metodo, verifica si el dni ingresado por teclado corresponde a una persona que existe en la lista.
             //Nota: La persona existe en la lista si realiza una actividad que esta autorizada y si su dni esta cargado en ella.
             sistemaGestor();
+
+            verifica();
         }
         public class Persona//Clase Persona.
         {
@@ -53,9 +56,10 @@ namespace TP4_Diseño
             public string email { get; set; }
             public Actividad nombreActividad { get; set; }
             public DateTime fecha { get; set; }
+            public Empresa nombreEmpresa { get; set;  }
 
             //Metodo constructor de la clase Persona.
-            public Persona(string nombreApellido, string dni, string domicilio, string telefono, string email, Actividad nombreActividad, DateTime fecha)
+            public Persona(string nombreApellido, string dni, string domicilio, string telefono, string email, Actividad nombreActividad, DateTime fecha, Empresa nombreEmpresa)
             {
                 this.nombreApellido = nombreApellido;
                 this.dni = dni;
@@ -64,6 +68,7 @@ namespace TP4_Diseño
                 this.email = email;
                 this.nombreActividad = nombreActividad;
                 this.fecha = fecha;
+                this.nombreEmpresa = nombreEmpresa;
             }
         }
         public class Actividad//Clase Actividad.
@@ -83,6 +88,8 @@ namespace TP4_Diseño
             public static List<Actividad> actividadesAutorizadas = new List<Actividad>();
 
             public static List<Persona> personasAutorizadas = new List<Persona>();
+
+            public static List<Persona> personasNoDadosDeBaja = new List<Persona>();
         }
         public class Empresa
         {
@@ -183,6 +190,40 @@ namespace TP4_Diseño
             if(ban !=1)
             {
                 Console.WriteLine("\n--LA PERSONA NO EXISTE EN LA LISTA---\n");
+            }
+        }
+        public static void verifica()
+        {
+            int num;
+            string numero;
+
+            Console.WriteLine("\nDesea dar de baja a un empleado?\n");
+            Console.WriteLine("\n-Ingrese 1 si desea dar baja.\n");
+            Console.WriteLine("\n-Ingrese 2  para salir.\n");
+            num = int.Parse(Console.ReadLine());
+
+            while(num == 1)
+            {
+                Console.WriteLine("\nIngrese el DNI de la persona:\n");
+                numero = Console.ReadLine();
+
+                foreach (var e in CargarListas.personas)
+                {
+                    if(numero != e.dni)
+                    {
+                        CargarListas.personasNoDadosDeBaja.Add(e);//Se apilan todas las personas de distinto dni al ingresado.
+                    }
+                }
+
+                Console.WriteLine("\nDesea dar de baja a un empleado?\n");
+                Console.WriteLine("\n-Ingrese 1 si desea dar baja.\n");
+                Console.WriteLine("\n-Ingrese 2  para salir.\n");
+                num = int.Parse(Console.ReadLine());
+            }
+
+            foreach (var f in CargarListas.personasNoDadosDeBaja)
+            {
+                Console.WriteLine($"{f.nombreApellido}");
             }
         }
     }
