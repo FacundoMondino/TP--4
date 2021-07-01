@@ -8,77 +8,82 @@ namespace TP4_Diseño
         static void Main(string[] args)
         {
             int a;
-            //Creacion de objeos actividad. Aagrega a la lista las actividades consideradas autorizadas.
+      
+            //ObjetoActividad y agrego a lista de actividadesAutorizadas.
+
             Actividad actividadUno = new Actividad("camillero");
-            CargarListas.actividadesAutorizadas.Add(actividadUno);
+            RepositorioGlobal.actividadesAutorizadas.Add(actividadUno);
             Actividad actividadDos = new Actividad("estudiante");
             Actividad actividadTres = new Actividad("enfermero");
-            CargarListas.actividadesAutorizadas.Add(actividadTres);
+            RepositorioGlobal.actividadesAutorizadas.Add(actividadTres);
 
-            //Creacion de objetos empresa. A cada persona se le asignara una empresa.
-            Empresa empresaUno = new Empresa("EmpresaUno", "100", "DomicilioUno", "LocalidadUno", "emailUno", "telefonoUno", actividadUno);
-            Empresa empresaDos = new Empresa("EmpresaDos", "200", "DomicilioDos", "LocalidadDos", "emailDos", "telefonoDos", actividadTres);
-            Empresa empresaTres = new Empresa("EmpresaTres", "300", "DomicilioTres", "LocalidadTres", "emailTres", "telefonoTres", actividadDos);
+            //ObjetoEmpresa. Cada Empresa tiene su Actividad.
 
-            //Creacion de objetos persona. Agrega a la lista todas las personas.
-            Persona personaUno = new Persona("Pepito Martinez", "67890098", "domicilioUno", "telefonoUno", "emailUno", actividadUno, DateTime.Parse("25/08/2021"), empresaUno);
-            CargarListas.personas.Add(personaUno);
-            Persona personaDos = new Persona("Fulanito DeTal", "98765432", "domicilioDos", "telefonoDos", "emailDos", actividadDos, DateTime.Parse("27/10/2021"), empresaTres);
-            CargarListas.personas.Add(personaDos);
-            Persona personaTres = new Persona("Susana Lopez", "96765430", "domicilioTres", "telefonoTres", "emailTres", actividadTres,DateTime.Parse("25/05/2021"), empresaDos);
-            CargarListas.personas.Add(personaTres);
+            Empresa empresaUno = new Empresa("EmpresaA", "100", "DomEmpresaA", "LocalidadA", "emailEmpresaA", "telA", actividadUno);
+            Empresa empresaDos = new Empresa("EmpresaB", "200", "DomEmpresaB", "LocalidadB", "emailEmpresaB", "telB", actividadTres);
+            Empresa empresaTres = new Empresa("EmpresaC", "300", "DomEmpresaC", "LocalidadC", "emailEmpresaC", "telC", actividadDos);
 
-            Console.WriteLine("INGRESE 1 PARA INICIAR LA EJECUCION DEL PROGRAMA:");
+            //ObjetosPersona y agrego a lista de personas. TRUE = activa = trabajando y FALSE = no activa = no trabaja.
+            
+            Persona personaUno = new Persona("PepeMartinez", "123", "domUno", "telUno", "emailUno", actividadUno, DateTime.Parse("25/08/2021"), empresaUno, DateTime.Parse("29/06/2021 08:25:02 AM"), 32.4, "AA-470-CV", "DestinoUno", "00:00:00", true);
+            RepositorioGlobal.personas.Add(personaUno);
+            Persona personaDos = new Persona("FulanitoDeTal", "98765432", "domDos", "telDos", "emailDos", actividadDos, DateTime.Parse("27/10/2021"), empresaTres, DateTime.Parse("30/06/2021 17:30:08 PM"), 39.5, "AB-770-WN", "DestinoDos", "00:00:00", true);
+            RepositorioGlobal.personas.Add(personaDos);
+            Persona personaTres = new Persona("SusiLopez", "456", "domTres", "telTres", "emailTres", actividadTres, DateTime.Parse("25/08/2021"), empresaDos, DateTime.Parse("01/07/2021 07:25:10 AM"), 38.1, "AE-571-RL", "DestinoTres", "00:00:00", true);
+            RepositorioGlobal.personas.Add(personaTres);
+            /*Persona personaCuatro = new Persona("MarioMartinez", "098234567", "domCuatro", "telCuatro", "emailCuatro", actividadTres, DateTime.Parse("28/06/2021"), empresaDos, DateTime.Parse("02/07/2021 07:35:10 AM"), 36.1, "AB-581-RM", "DestinoCuatro");
+            RepositorioGlobal.personas.Add(personaCuatro);
+            Persona personaCinco = new Persona("HugoPerez", "453278909", "domCinco", "telCinco", "emailCuatro", actividadTres, DateTime.Parse("30/05/2021"), empresaDos, DateTime.Parse("02/07/2021 07:35:10 AM"), 39.1, "KLS-570", "DestinoCinco");
+            RepositorioGlobal.personas.Add(personaCinco);*/
+
+            Console.WriteLine("Ingrese 1 para iniciar el programa:");
             a = int.Parse(Console.ReadLine());
+
+            comprobacion();
 
             while (a == 1)
             {
                 int opcion;
 
-                Console.WriteLine("\nINGRESE LA OPCION QUE DESEA REALIZAR:\n");
-                Console.WriteLine("-INGRESE 1 PARA MOSTRAR LA LISTA DE EMPLEADOS");
-                Console.WriteLine("-INGRESE 2 PARA MOSTRAR LA LISTA DE ACTIVIDADES AUTORIZADAS");
-                Console.WriteLine("-INGRESE 3 PARA VERIFICAR SI UN EMPLEADO PUEDE CIRCULAR POR UN AREA");
-                Console.WriteLine("-INGRESE 4 PARA DAR DE BAJA A UN EMPLEADO");
-                Console.WriteLine("-INGRESE 5 PARA FINALIZAR");
+                Console.WriteLine("\nIngrese la opcion:\n");
+                Console.WriteLine("1- Lista de personas");
+                Console.WriteLine("2- Lista de actividades autoizadas");
+                Console.WriteLine("3- Autorizacion de ingreso");
+                Console.WriteLine("4- Dar baja");
+                Console.WriteLine("5- Registrar Salida");
+                Console.WriteLine("6- Salir");
 
                 opcion = int.Parse(Console.ReadLine());
 
                 if (opcion == 1)
                 {
-                    //Muestra la lista con todas las personas que quieren acceder al area. (no se verifico aun).
-                    Console.WriteLine("\nLISTA DE EMPLEADOS:\n");
+                    Console.WriteLine("\nLista de personas:\n");
                     mostrarListaPersonas();
                 }
                 if (opcion == 2)
                 {
-                    //Muestra la lista de todas las actividades que estan autorizadas.
-                    Console.WriteLine("\nLISTA DE ACTIVIDADES AUTORIZADAS:\n");
+                    Console.WriteLine("\nLista de actividades actualizadas:\n");
                     mostrarListaAcividadesAutorizadas();
                 }
                 if (opcion == 3)
                 {
-                    Console.WriteLine("\nVERIFICACION DE EMPLEADOS SEGUN LA ACTIVIDAD QUE REALIZAN:\n");
-                    comprobacion();//Comprueba, de las personas de la lista, si puede o no cirular segun la actividad que realiza.
-
-                    Console.WriteLine("\nLISTA DE PEROSNAS QUE EXISTEN Y PUEDEN CIRCULAR:\n");
-                    mostrarListaPersonasAutorizadas();//Muestra la lista con las personas que realizan una actividad autoriazada.
-
-                    //Metodo, verifica si el dni ingresado por teclado corresponde a una persona que existe en la lista.
-                    //Nota: La persona existe en la lista si realiza una actividad que esta autorizada y si su dni esta cargado en ella.
-                    sistemaGestor();
+                    AutorizarIngreso();
                 }
                 if (opcion == 4)
                 {
-                    verifica();//Verifica si se desea dar de baja a un empleado. Caso verdadero, da baja.
+                    RegistrarBaja();
                 }
                 if (opcion == 5)
                 {
-                    break;//Para salir del ciclo.
+                    RegistrarSalida();
+                }
+                if (opcion == 6)
+                {
+                    break;
                 }
             }
         }
-        public class Persona//Clase Persona.
+        public class Persona
         {
             public string nombreApellido { get; set; }
             public string dni { get; set; }
@@ -87,10 +92,15 @@ namespace TP4_Diseño
             public string email { get; set; }
             public Actividad nombreActividad { get; set; }
             public DateTime fecha { get; set; }
-            public Empresa nombreEmpresa { get; set;  }
+            public Empresa nombreEmpresa { get; set; }
+            public DateTime fechaHoraIngreso { get; set; }
+            public double temperatura { get; set; }
+            public string patente { get; set; }
+            public string destino { get; set; }
+            public string HorarioSalida { get; set; }
+            public Boolean estadoActual {get; set;}
 
-            //Metodo constructor de la clase Persona.
-            public Persona(string nombreApellido, string dni, string domicilio, string telefono, string email, Actividad nombreActividad, DateTime fecha, Empresa nombreEmpresa)
+            public Persona(string nombreApellido, string dni, string domicilio, string telefono, string email, Actividad nombreActividad, DateTime fecha, Empresa nombreEmpresa, DateTime fechaHoraIngreso, double temperatura, string patente, string destino, string HorarioSalida, Boolean estadoActual)
             {
                 this.nombreApellido = nombreApellido;
                 this.dni = dni;
@@ -100,9 +110,15 @@ namespace TP4_Diseño
                 this.nombreActividad = nombreActividad;
                 this.fecha = fecha;
                 this.nombreEmpresa = nombreEmpresa;
+                this.fechaHoraIngreso = fechaHoraIngreso;
+                this.temperatura = temperatura;
+                this.patente = patente;
+                this.destino = destino;
+                this.HorarioSalida = HorarioSalida;
+                this.estadoActual = estadoActual;
             }
         }
-        public class Actividad//Clase Actividad.
+        public class Actividad
         {
             public string nombreActividad { get; set; }
             public Persona nombrePersona { get; set; }
@@ -112,7 +128,7 @@ namespace TP4_Diseño
                 this.nombreActividad = nombreActividad;
             }
         }
-        public class CargarListas
+        public class RepositorioGlobal
         {
             public static List<Persona> personas = new List<Persona>();
 
@@ -121,16 +137,18 @@ namespace TP4_Diseño
             public static List<Persona> personasAutorizadas = new List<Persona>();
 
             public static List<Persona> personasNoDadosDeBaja = new List<Persona>();
+
+            //public static List<String> aux = new List<String>();
         }
         public class Empresa
         {
-            public string razonSocial { get; set;}
+            public string razonSocial { get; set; }
             public string cuit { get; set; }
             public string domicilio { get; set; }
             public string localidad { get; set; }
             public string email { get; set; }
             public string telefono { get; set; }
-            public Actividad actividadEmpresa { get; set;}
+            public Actividad actividadEmpresa { get; set; }
 
             public Empresa(string razonSocial, string cuit, string domicilio, string localidad, string email, string telefono, Actividad actividadEmpresa)
             {
@@ -143,29 +161,28 @@ namespace TP4_Diseño
                 this.actividadEmpresa = actividadEmpresa;
             }
         }
- 
         public static void mostrarListaPersonas()//Metodo, muestra lista con personas.
         {
-            foreach (var a in CargarListas.personas)
+            foreach (var a in RepositorioGlobal.personas)
             {
-                Console.WriteLine($"{a.nombreApellido} - {a.dni} - {a.domicilio} - {a.telefono} - {a.email} - {a.nombreActividad.nombreActividad} - {a.fecha}");
+                Console.WriteLine($"{a.nombreApellido} - {a.dni} - {a.domicilio} - {a.telefono} - {a.email} - {a.nombreActividad.nombreActividad} - {a.fecha} - {a.fechaHoraIngreso} - {a.temperatura} - {a.patente} - {a.destino} - {a.HorarioSalida} - {a.estadoActual}");
             }
         }
         public static void mostrarListaAcividadesAutorizadas()//Metodo, muestra lista actividades autorizadas.
         {
-            foreach (var b in CargarListas.actividadesAutorizadas)
+            foreach (var b in RepositorioGlobal.actividadesAutorizadas)
             {
                 Console.WriteLine($"{b.nombreActividad}");
             }
         }
         public static void comprobacion()
         {
-            foreach (var persona in CargarListas.personas)
+            foreach (var persona in RepositorioGlobal.personas)
             {
                 int bandera = 0;
                 Actividad actividadA = persona.nombreActividad;
 
-                foreach (var actividad in CargarListas.actividadesAutorizadas)
+                foreach (var actividad in RepositorioGlobal.actividadesAutorizadas)
                 {
                     Actividad actividadB = actividad;
                     if (actividadA == actividadB)
@@ -175,30 +192,21 @@ namespace TP4_Diseño
                 }
                 if (bandera == 1)
                 {
-                    Console.WriteLine($"-LA PERSONA {persona.nombreApellido} REALIZA UNA ACTIVIDAD QUE ESTA AUTORIZADA");
-                    CargarListas.personasAutorizadas.Add(persona);
+                    RepositorioGlobal.personasAutorizadas.Add(persona);
                 }
-                else Console.WriteLine($"-LA PERSONA {persona.nombreApellido} REALIZA UNA ACTIVIDAD QUE NO ESTA AUTORIZADA");
             }
         }
-        public static void mostrarListaPersonasAutorizadas()
-        {
-            foreach (var d in CargarListas.personasAutorizadas)
-            {
-                Console.WriteLine($"-NOMBRE Y APELLIDO: {d.nombreApellido}\n-DNI: {d.dni}");
-            }
-        }
-        public static void sistemaGestor()
+        public static void AutorizarIngreso()
         {
             string numDni;
             int ban = 0;
             int banDos = 0;
+            int banTres = 0;
 
-            Console.WriteLine("\nVERIFICACION DE EMPLEADOS SEGUN EL DNI:\n");
             Console.WriteLine("\nINGRESE UN DNI PARA VERIFICAR SI EXISTE EN LA LISTA O NO:\n");
             numDni = Console.ReadLine();
 
-            foreach (var d in CargarListas.personasAutorizadas)
+            foreach (var d in RepositorioGlobal.personasAutorizadas)
             {
                 if (d.dni == numDni)
                 {
@@ -210,66 +218,96 @@ namespace TP4_Diseño
                         Console.WriteLine($"-Fecha: {d.fecha}");
                         Console.WriteLine($"-Empleado: {d.nombreApellido}");
                     }
+                    if (d.temperatura <= 37)
+                    {
+                        banTres = 1;
+                    }
                 }
             }
-            if (ban == 1 && banDos == 1)
+            if (ban == 1 && banDos == 1 && banTres == 1)
             {
-                Console.WriteLine("\nEL EMPLEADO PUEDE CIRCULAR POR EL AREA, CUMPLE CON LAS TRES CONDICIONES:\n");
-                Console.WriteLine("1-EXISTE EN LA LISTA");
-                Console.WriteLine("2-REALIZA UNA ACTIVIDAD AUTORIZADA");
-                Console.WriteLine("3-SU FECHA ES VIGENTE");
+                Console.WriteLine("\nEl emleado puede ingresar por el area, cumple con las condiciones:\n");
+                Console.WriteLine("1-Existe en la lista");
+                Console.WriteLine("2-Realiza una actividad autorizada");
+                Console.WriteLine("3-Su fecha es vigente");
+                Console.WriteLine("4-Su temperatura no supera los 37°");
             }
-            if (ban == 1 && banDos != 1)
+            if (ban == 1 && banDos != 1 && banTres == 1)
             {
-                Console.WriteLine("\nEL EMPLEADO NO PUEDE CIRCULAR POR EL AREA, NO CUMPLE CON LAS TRES CONDICIONES:\n");
-                Console.WriteLine("1-EXISTE EN LA LISTA");
-                Console.WriteLine("2-REALIZA UNA ACTIVIDAD AUTORIZADA");
-                Console.WriteLine("3-SU FECHA ESTA VENCIDA");
+                Console.WriteLine("\nEl empleado no puede circular por el area, no cumple con las condiciones:\n");
+                Console.WriteLine("1-Existe en la lista");
+                Console.WriteLine("2-Realiza una actividad autorizada");
+                Console.WriteLine("3-Su fecha esta vencida");
+                Console.WriteLine("4-Su temperatura no supera los 37°");
             }
-            if(ban !=1)//Cuando el empleado realiza una actividad no autorizada, no esta cargado en la lista de personasAutorizadas.
+            if (ban == 1 && banDos == 1 && banTres != 1)
             {
-                Console.WriteLine("\n-EL EMPLEADO INGRESADO NO EXISTE EN LA LISTA DE PERSONAS AUTORIZADAS\n");
+                Console.WriteLine("\nEl empleado no puede circular por el area, no cumple con las condiciones:\n");
+                Console.WriteLine("1-Existe en la lista");
+                Console.WriteLine("2-Realiza una actividad autorizada");
+                Console.WriteLine("3-Su fecha es vigente");
+                Console.WriteLine("4-Su temperatura supera los 37°");
+            }
+            if (ban == 1 && banDos != 1 && banTres != 1)
+            {
+                Console.WriteLine("\nEl empleado no puede circular por el area, no cumple con las condiciones:\n");
+                Console.WriteLine("1-Existe en la lista");
+                Console.WriteLine("2-Realiza una actividad autorizada");
+                Console.WriteLine("3-Su fecha esta vencida");
+                Console.WriteLine("4-Su temperatura supera los 37°");
+            }
+            if (ban != 1)//Cuando el empleado realiza una actividad no autorizada, no esta cargado en la lista de personasAutorizadas.
+            {
+                Console.WriteLine("\n-El empleado no existe en la lista\n");
             }
         }
-        public static void verifica()
+        public static void RegistrarBaja()
         {
-            int num;
             string numero;
 
-            Console.WriteLine("\nEJECUCION PARA DAR DE BAJA A UN EMPLEADO:\n");
-            Console.WriteLine("\n-INGRESE 1 PARA CONTINUAR\n");
-            Console.WriteLine("\n-INGRESE 2 PARA FINALIZAR\n");
-            num = int.Parse(Console.ReadLine());
+            Console.WriteLine("\nIngrese DNI del empleado:\n");
+            numero = Console.ReadLine();
 
-            while (num == 1)
+            foreach (var e in RepositorioGlobal.personasAutorizadas)
             {
-                Console.WriteLine("\nINGRESE EL DNI DEL EMPLEADO AL CUAL SE LE DA DE BAJA:\n");
-                numero = Console.ReadLine();
-
-                foreach (var e in CargarListas.personas)
+                if (numero == e.dni)
                 {
-                    if(numero != e.dni)
-                    {
-                        CargarListas.personasNoDadosDeBaja.Add(e);//Se apilan todas las personas de distinto dni al ingresado.
-                    }
-                    if(numero == e.dni)//Cuando el dni es verdadero con el ingresado, se muestra el nom del empleado con baja.
-                    {
-                        Console.WriteLine($"-SE DIO DE BAJA AL EMPLEADO: {e.nombreApellido}");
-                    }
+                    e.estadoActual = false;
+                    Console.WriteLine($"\nSe registro la salida del empleado: {e.nombreApellido}\n");
                 }
-
-                Console.WriteLine("\nEJECUCION PARA DAR DE BAJA A UN EMPLEADO:\n");
-                Console.WriteLine("\n-INGRESE 1 PARA CONTINUAR\n");
-                Console.WriteLine("\n-INGRESE 2 PARA FINALIZAR\n");
-                num = int.Parse(Console.ReadLine());
             }
-
-            Console.WriteLine("\nLISTA DE EMPLEADOS QUE NO FUERON DADOS DE BAJA:\n");
-            //Recorro la lista con los empleados que no fueron dados de baja.
-            foreach (var f in CargarListas.personasNoDadosDeBaja)
+            Console.WriteLine("Empleados activos:");
+            foreach (var l in RepositorioGlobal.personas)
             {
-                Console.WriteLine($"{f.nombreApellido}");
+                if(l.estadoActual == true)
+                {
+                    Console.WriteLine(l.nombreApellido);
+                }
             }
+        }
+        public static string RegistrarSalida()
+        {
+            string numero;
+            string resultado="00:00:00";
+            int ban = 0;
+            
+            Console.WriteLine("\nIngrese DNI del empleado:\n");
+            numero = Console.ReadLine();
+            
+            foreach (var k in RepositorioGlobal.personasAutorizadas)
+            {
+                if (numero == k.dni)
+                {
+                    ban = 1;
+                    Console.WriteLine("\nIngrese la hora:\n");
+                    resultado = k.HorarioSalida = Console.ReadLine();
+                }
+            }
+            if(ban != 1)
+            {
+                Console.WriteLine("El DNI ingresado no es valido");
+            }
+            return resultado;
         }
     }
 }
