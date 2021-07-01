@@ -25,16 +25,16 @@ namespace TP4_Diseño
 
             //ObjetosPersona y agrego a lista de personas. TRUE = activa = trabajando y FALSE = no activa = no trabaja.
             
-            Persona personaUno = new Persona("PepeMartinez", "123", "domUno", "telUno", "emailUno", actividadUno, DateTime.Parse("25/08/2021"), empresaUno, DateTime.Parse("29/06/2021 08:25:02 AM"), 32.4, "AA-470-CV", "DestinoUno", "00:00:00", true);
+            Persona personaUno = new Persona("PepeMartinez", "12345678", "domUno", "telUno", "emailUno", actividadUno, DateTime.Parse("25/08/2021"), empresaUno, DateTime.Parse("29/06/2021 08:25:02 AM"), 32.4, "AA-470-CV", "DestinoUno", "00:00:00", true);
             RepositorioGlobal.personas.Add(personaUno);
             Persona personaDos = new Persona("FulanitoDeTal", "98765432", "domDos", "telDos", "emailDos", actividadDos, DateTime.Parse("27/10/2021"), empresaTres, DateTime.Parse("30/06/2021 17:30:08 PM"), 39.5, "AB-770-WN", "DestinoDos", "00:00:00", true);
             RepositorioGlobal.personas.Add(personaDos);
-            Persona personaTres = new Persona("SusiLopez", "456", "domTres", "telTres", "emailTres", actividadTres, DateTime.Parse("25/08/2021"), empresaDos, DateTime.Parse("01/07/2021 07:25:10 AM"), 38.1, "AE-571-RL", "DestinoTres", "00:00:00", true);
+            Persona personaTres = new Persona("SusiLopez", "45678098", "domTres", "telTres", "emailTres", actividadTres, DateTime.Parse("25/08/2021"), empresaDos, DateTime.Parse("01/07/2021 07:25:10 AM"), 38.1, "AE-571-RL", "DestinoTres", "00:00:00", true);
             RepositorioGlobal.personas.Add(personaTres);
-            /*Persona personaCuatro = new Persona("MarioMartinez", "098234567", "domCuatro", "telCuatro", "emailCuatro", actividadTres, DateTime.Parse("28/06/2021"), empresaDos, DateTime.Parse("02/07/2021 07:35:10 AM"), 36.1, "AB-581-RM", "DestinoCuatro");
+            Persona personaCuatro = new Persona("MarioMartinez", "098234567", "domCuatro", "telCuatro", "emailCuatro", actividadTres, DateTime.Parse("28/06/2021"), empresaDos, DateTime.Parse("02/07/2021 07:35:10 AM"), 36.1, "AB-581-RM", "DestinoCuatro", "00:00:00", true);
             RepositorioGlobal.personas.Add(personaCuatro);
-            Persona personaCinco = new Persona("HugoPerez", "453278909", "domCinco", "telCinco", "emailCuatro", actividadTres, DateTime.Parse("30/05/2021"), empresaDos, DateTime.Parse("02/07/2021 07:35:10 AM"), 39.1, "KLS-570", "DestinoCinco");
-            RepositorioGlobal.personas.Add(personaCinco);*/
+            Persona personaCinco = new Persona("HugoPerez", "453278909", "domCinco", "telCinco", "emailCuatro", actividadTres, DateTime.Parse("30/07/2021"), empresaDos, DateTime.Parse("02/09/2021 07:35:10 AM"), 35.1, "KLS-570", "DestinoCinco", "00:00:00", true);
+            RepositorioGlobal.personas.Add(personaCinco);
 
             Console.WriteLine("Ingrese 1 para iniciar el programa:");
             a = int.Parse(Console.ReadLine());
@@ -203,7 +203,7 @@ namespace TP4_Diseño
             int banDos = 0;
             int banTres = 0;
 
-            Console.WriteLine("\nINGRESE UN DNI PARA VERIFICAR SI EXISTE EN LA LISTA O NO:\n");
+            Console.WriteLine("\nIngrese DNI del empleado:\n");
             numDni = Console.ReadLine();
 
             foreach (var d in RepositorioGlobal.personasAutorizadas)
@@ -226,7 +226,7 @@ namespace TP4_Diseño
             }
             if (ban == 1 && banDos == 1 && banTres == 1)
             {
-                Console.WriteLine("\nEl emleado puede ingresar por el area, cumple con las condiciones:\n");
+                Console.WriteLine("\n-El emleado puede ingresar por el area, cumple con las condiciones:\n");
                 Console.WriteLine("1-Existe en la lista");
                 Console.WriteLine("2-Realiza una actividad autorizada");
                 Console.WriteLine("3-Su fecha es vigente");
@@ -234,7 +234,7 @@ namespace TP4_Diseño
             }
             if (ban == 1 && banDos != 1 && banTres == 1)
             {
-                Console.WriteLine("\nEl empleado no puede circular por el area, no cumple con las condiciones:\n");
+                Console.WriteLine("\n-El empleado no puede circular por el area, no cumple con las condiciones:\n");
                 Console.WriteLine("1-Existe en la lista");
                 Console.WriteLine("2-Realiza una actividad autorizada");
                 Console.WriteLine("3-Su fecha esta vencida");
@@ -242,7 +242,7 @@ namespace TP4_Diseño
             }
             if (ban == 1 && banDos == 1 && banTres != 1)
             {
-                Console.WriteLine("\nEl empleado no puede circular por el area, no cumple con las condiciones:\n");
+                Console.WriteLine("\n-El empleado no puede circular por el area, no cumple con las condiciones:\n");
                 Console.WriteLine("1-Existe en la lista");
                 Console.WriteLine("2-Realiza una actividad autorizada");
                 Console.WriteLine("3-Su fecha es vigente");
@@ -250,7 +250,7 @@ namespace TP4_Diseño
             }
             if (ban == 1 && banDos != 1 && banTres != 1)
             {
-                Console.WriteLine("\nEl empleado no puede circular por el area, no cumple con las condiciones:\n");
+                Console.WriteLine("\n-El empleado no puede circular por el area, no cumple con las condiciones:\n");
                 Console.WriteLine("1-Existe en la lista");
                 Console.WriteLine("2-Realiza una actividad autorizada");
                 Console.WriteLine("3-Su fecha esta vencida");
@@ -301,6 +301,7 @@ namespace TP4_Diseño
                     ban = 1;
                     Console.WriteLine("\nIngrese la hora:\n");
                     resultado = k.HorarioSalida = Console.ReadLine();
+                    Console.WriteLine($"\nSe Registro la baja del empleado: {k.nombreApellido}\n");
                 }
             }
             if(ban != 1)
