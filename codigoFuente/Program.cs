@@ -1,5 +1,8 @@
-﻿using System;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace TP4_Diseño
 {
@@ -51,7 +54,8 @@ namespace TP4_Diseño
                 Console.WriteLine("3- Autorizacion de ingreso");
                 Console.WriteLine("4- Dar baja");
                 Console.WriteLine("5- Registrar Salida");
-                Console.WriteLine("6- Salir");
+                Console.WriteLine("6- Generar Codigo QR");
+                Console.WriteLine("7- Salir");
 
                 opcion = int.Parse(Console.ReadLine());
 
@@ -79,6 +83,10 @@ namespace TP4_Diseño
                 }
                 if (opcion == 6)
                 {
+                    GenerarCodigoQR();
+                }
+                if (opcion == 7)
+                {
                     break;
                 }
             }
@@ -97,10 +105,10 @@ namespace TP4_Diseño
             public double temperatura { get; set; }
             public string patente { get; set; }
             public string destino { get; set; }
-            public string HorarioSalida { get; set; }
+            public string horarioSalida { get; set; }
             public Boolean estadoActual {get; set;}
 
-            public Persona(string nombreApellido, string dni, string domicilio, string telefono, string email, Actividad nombreActividad, DateTime fecha, Empresa nombreEmpresa, DateTime fechaHoraIngreso, double temperatura, string patente, string destino, string HorarioSalida, Boolean estadoActual)
+            public Persona(string nombreApellido, string dni, string domicilio, string telefono, string email, Actividad nombreActividad, DateTime fecha, Empresa nombreEmpresa, DateTime fechaHoraIngreso, double temperatura, string patente, string destino, string horarioSalida, Boolean estadoActual)
             {
                 this.nombreApellido = nombreApellido;
                 this.dni = dni;
@@ -114,7 +122,7 @@ namespace TP4_Diseño
                 this.temperatura = temperatura;
                 this.patente = patente;
                 this.destino = destino;
-                this.HorarioSalida = HorarioSalida;
+                this.horarioSalida = horarioSalida;
                 this.estadoActual = estadoActual;
             }
         }
@@ -136,9 +144,7 @@ namespace TP4_Diseño
 
             public static List<Persona> personasAutorizadas = new List<Persona>();
 
-            public static List<Persona> personasNoDadosDeBaja = new List<Persona>();
-
-            //public static List<String> aux = new List<String>();
+            //public static List<Persona> personasNoDadosDeBaja = new List<Persona>();
         }
         public class Empresa
         {
@@ -165,7 +171,7 @@ namespace TP4_Diseño
         {
             foreach (var a in RepositorioGlobal.personas)
             {
-                Console.WriteLine($"{a.nombreApellido} - {a.dni} - {a.domicilio} - {a.telefono} - {a.email} - {a.nombreActividad.nombreActividad} - {a.fecha} - {a.fechaHoraIngreso} - {a.temperatura} - {a.patente} - {a.destino} - {a.HorarioSalida} - {a.estadoActual}");
+                Console.WriteLine($"{a.nombreApellido} - {a.dni} - {a.domicilio} - {a.telefono} - {a.email} - {a.nombreActividad.nombreActividad} - {a.fecha} - {a.fechaHoraIngreso} - {a.temperatura} - {a.patente} - {a.destino} - {a.horarioSalida} - {a.estadoActual}");
             }
         }
         public static void mostrarListaAcividadesAutorizadas()//Metodo, muestra lista actividades autorizadas.
@@ -300,7 +306,7 @@ namespace TP4_Diseño
                 {
                     ban = 1;
                     Console.WriteLine("\nIngrese la hora:\n");
-                    resultado = k.HorarioSalida = Console.ReadLine();
+                    resultado = k.horarioSalida = Console.ReadLine();
                     Console.WriteLine($"\nSe Registro la baja del empleado: {k.nombreApellido}\n");
                 }
             }
@@ -309,6 +315,29 @@ namespace TP4_Diseño
                 Console.WriteLine("El DNI ingresado no es valido");
             }
             return resultado;
+        }
+        public static void GenerarCodigoQR()
+        {
+            string numero;
+
+            Console.WriteLine("\nIngrese DNI del empleado para generar codigo QR:\n");
+            numero = Console.ReadLine();
+
+            foreach (var m in RepositorioGlobal.personasAutorizadas)
+            {
+                if(m.dni == numero)
+                {
+                    Document doc = new Document(PageSize.A4);
+                    PdfWriter.GetInstance(doc, new FileStream($@"C:\Users\Usuario\Desktop\TPMenosCuatroMondinoFacundoDiseño\QR\QR{m.nombreApellido}.pdf", FileMode.Create));
+                    doc.Open();
+                    BarcodeQRCode codigoQR = new BarcodeQRCode(m.nombreApellido, 1000, 1000, null);
+                    Image codeQRImage = codigoQR.GetImage();
+                    codeQRImage.ScaleAbsolute(200, 200);
+                    doc.Add(codeQRImage);
+                    doc.Close();
+                    Console.WriteLine($"\nEl Codigo QR del empleado: {m.nombreApellido}\n");
+                }
+            }
         }
     }
 }
