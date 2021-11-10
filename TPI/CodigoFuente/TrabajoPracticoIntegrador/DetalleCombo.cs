@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace TrabajoPracticoIntegrador
 {
-    class DetalleCombo
+    public class DetalleCombo
     {
         public int codigoCombo { get; set; }
         public string nombreCombo { get; set; }
         public decimal descuento { get; set; }
         public bool disponibilidadCombo { get; set; }//Si al menos 1 producto esta dado de baja, el combo no esta disponible.
-        //public List<Producto> nombreProductos { get; set; }
         public string descripcion { get; set; }
         public decimal precioUnitarioCombo { get; set; }
         public int cantidadActualCombo { get; set; }
@@ -24,7 +23,6 @@ namespace TrabajoPracticoIntegrador
             this.nombreCombo = nombreCombo;
             this.descuento = descuento;
             this.disponibilidadCombo = disponibilidadCombo;
-            //this.nombreProductos = nombreProductos;
             this.descripcion = descripcion;
             this.precioUnitarioCombo = precioUnitarioCombo;
             this.cantidadActualCombo = cantidadActualCombo;
