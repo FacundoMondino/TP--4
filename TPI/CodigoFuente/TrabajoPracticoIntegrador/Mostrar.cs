@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TrabajoPracticoIntegrador
 {
-    class Mostrar
+    public class Mostrar
     {
         public static void VerProductosRegistrados()
         {
@@ -20,7 +20,7 @@ namespace TrabajoPracticoIntegrador
                     $"Precio unitario: {item.precioUnitario}\nCantidad actual en stock: {item.cantidadActual}" +
                     $"\nEstado en stock: {item.disponible}\nPrecio de oferta en rango 2 a 5 productos: {item.precioRangoDosACinco}" +
                     $"\nPrecio de oferta en rango 6 a 10 productos: {item.precioRangoSeisADiez}" +
-                    $"\nPrecio de oferta en rango 10 o mas productos: {item.precioRangoDiezOMas}\n" +
+                    $"\nPrecio de oferta en rango 10 o mas productos: {item.precioRangoDiezOMas}\nFecha de inicio de la oferta: {item.fechaInicioOferta}" +
                     $"\nEstado actual de oferta: {item.estaEnOferta}\nDescripcion de la oferta: {item.descripcionOferta}\n" +
                     $"\nFecha de cierre de la oferta: {item.fechaCierreOferta}\nPrecio de la oferta: {item.precioDeOferta}");
                 }

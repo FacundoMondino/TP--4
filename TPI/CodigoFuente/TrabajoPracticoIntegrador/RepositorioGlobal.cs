@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TrabajoPracticoIntegrador
 {
-    class RepositorioGlobal
+    public class RepositorioGlobal
     {
         public static List<Producto> productos = new List<Producto>();
         public static List<DetalleCombo> combos = new List<DetalleCombo>();

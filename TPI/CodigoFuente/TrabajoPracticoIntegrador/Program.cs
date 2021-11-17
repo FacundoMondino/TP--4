@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 namespace TrabajoPracticoIntegrador
 {
-    class Program
+    public class Program
     {
         private static string _path = @"C:\JSON\miJson.json";//RUTA DE LA CARPETA DONDE SE GUARDAN LOS JSON CREADOS.
         private static string _path2 = @"C:\JSON\.JsonTeamDosjson";//RUTA JSON TEAM DOS.
@@ -31,7 +31,7 @@ namespace TrabajoPracticoIntegrador
                 Console.WriteLine("\n9-Registrar DTO team cinco");
                 Console.WriteLine("\n10-Registrar DTO De combo para team dos");
                 int opcionAingresar = int.Parse(Console.ReadLine());
-
+                
                 switch (opcionAingresar)
                 {
                     case 1: RegistroGlobal.RegistrarProducto(); 
@@ -53,6 +53,8 @@ namespace TrabajoPracticoIntegrador
                     case 9: RegistroGlobal.CrearJsonProductoTeamCinco();
                     break;
                     case 10: RegistroGlobal.CrearJsonDetalleComboTeamDos();
+                    break;
+                    default: Console.WriteLine("\n--Error en el ingreso de opcion, ingrese un valor contemplado en el menu de opciones--\n");
                     break;
                 }
 

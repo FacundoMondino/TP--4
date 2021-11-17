@@ -6,10 +6,12 @@ using System.Threading.Tasks;
  
 namespace TrabajoPracticoIntegrador
 {
-    class RegistroGlobal
+    public class RegistroGlobal
     {
         public static void RegistrarProducto()
         {
+            int codigoProducto;
+            bool codigoConNumeroEntero;
             bool estaDisponibleParaVenta = true;
             bool estaDadoDeBaja = true;
             bool estaEnOferta = true;
@@ -18,11 +20,23 @@ namespace TrabajoPracticoIntegrador
             DateTime? fechaInicioOferta = null;
             DateTime? fechaCierreOferta = null;
             string descripcionOferta = "";
-
+            int decisionParaOferta;
             Console.WriteLine("\n--Usted selecciono la opcion para registrar un producto--");
 
-            Console.WriteLine("\nIngrese el codigo:\n");
-            int codigoProducto = int.Parse(Console.ReadLine());
+
+            do
+            {
+                Console.WriteLine("\nIngrese el codigo:\n");
+                codigoConNumeroEntero = int.TryParse(Console.ReadLine(), out codigoProducto);
+                if(!codigoConNumeroEntero)
+                {
+                    Console.WriteLine("\n--El codigo del producto ingresado corresponde a un tipo de dato no entero--\n");
+                }
+                if (codigoProducto < 0)
+                {
+                    Console.WriteLine("\n--El codigo del producto ingresado corresponde a un entero negativo--\n");
+                }
+            } while (!codigoConNumeroEntero || codigoProducto < 0);
 
             Console.WriteLine("\nIngrese el nombre:\n");
             string nombreProducto = Console.ReadLine();
@@ -47,7 +61,7 @@ namespace TrabajoPracticoIntegrador
 
             Console.WriteLine("\nIngrese la cantidad de unidades en stock:\n");
             int cantidadActualDeProducto = int.Parse(Console.ReadLine());
-
+            
             Console.WriteLine("\nIngrese el precio unitario:\n");
             decimal precioUnitarioProducto = decimal.Parse(Console.ReadLine());
 
@@ -67,15 +81,19 @@ namespace TrabajoPracticoIntegrador
 
             decimal precioRangoDiezOMas = precioUnitarioProducto - (precioUnitarioProducto * 0.07M);
 
-            Console.WriteLine("\nDesea que el producto actual este en oferta?\n");
-            Console.WriteLine("Elija una opcion:");
-            Console.WriteLine("1-SI");
-            Console.WriteLine("2-NO");
-            int decisionParaOferta = int.Parse(Console.ReadLine());
-
+            do
+            {
+                Console.WriteLine("\nDesea que el producto actual este en oferta?\n");
+                Console.WriteLine("Elija una opcion:");
+                Console.WriteLine("1-SI");
+                Console.WriteLine("2-NO");
+                decisionParaOferta = int.Parse(Console.ReadLine());
+                
+            } while (decisionParaOferta != 1 && decisionParaOferta != 2);
+            
             if (decisionParaOferta == 1)
             {
-                Console.WriteLine("\nIngrese el motivo de la oferta\n");
+                Console.WriteLine("\nIngrese el motivo de la oferta:\n");
                 descripcionOferta = Console.ReadLine();
 
                 Console.WriteLine("\nIngrese la fecha que indique el inicio de la oferta\n");
@@ -84,8 +102,12 @@ namespace TrabajoPracticoIntegrador
                 Console.WriteLine("\nIngrese la fecha que indique el limite de vigencia de la oferta\n");
                 fechaCierreOferta = DateTime.Parse(Console.ReadLine());
 
-                Console.WriteLine("\nIngrese de descuento para aplicarle al calculo del precio de la oferta\n");
-                descuentoOferta = Decimal.Parse(Console.ReadLine());
+                do
+                {
+                    Console.WriteLine("\nIngrese de descuento para aplicarle al calculo del precio de la oferta:  FORMATO EJEMPLO: 0,10\n");
+                    descuentoOferta = Decimal.Parse(Console.ReadLine());
+                } while (descuentoOferta <= 0.00M);
+                
                 precioDeOferta = precioUnitarioProducto - (precioUnitarioProducto * descuentoOferta);
 
                 Producto nuevoProducto = new Producto(codigoProducto, categoriaPrdoucto, modeloProducto, tamañoProducto, colorProducto, fechaIngresoProducto, estaDadoDeBaja, nombreProducto, descripcionProducto, precioUnitarioProducto, cantidadActualDeProducto, estaDisponibleParaVenta, precioRangoDosACinco, precioRangoSeisADiez, precioRangoDiezOMas, estaEnOferta, descripcionOferta, precioDeOferta, fechaCierreOferta, fechaInicioOferta);
@@ -102,15 +124,31 @@ namespace TrabajoPracticoIntegrador
         public static void RegistrarCombo()
         {
             int opcion;
+            bool codigoComboConNumeroEntero;
             bool estaDisponible = true;
             decimal sumaDePreciosDeCadaCombo = 0;
             string productosAñadidos = "";
+            decimal descuentoCombo;
+            int cantidadActualCombo;
+            int codigoCombo;
+        
             RepositorioGlobal.productosParaCombo.Clear();
 
             Console.WriteLine("\n--Usted selecciono la opcion para registrar un combo--");
+            do
+            {
+                Console.WriteLine("\nIngrese el codigo:\n");
+                codigoComboConNumeroEntero = int.TryParse(Console.ReadLine(), out codigoCombo);
 
-            Console.WriteLine("\nIngrese el codigo:\n");
-            int codigoCombo = int.Parse(Console.ReadLine());
+                if (!codigoComboConNumeroEntero)
+                {
+                    Console.WriteLine("\n--El codigo del combo ingresado corresponde a un tipo de dato no entero--\n");
+                }
+                if(codigoCombo < 0)
+                {
+                    Console.WriteLine("\n--El codigo del combo ingresado corresponde a un entero negativo--\n");
+                }
+            } while (!codigoComboConNumeroEntero || codigoCombo < 0);
 
             Console.WriteLine("\nIngrese el nombre:\n");
             string nombreCombo = Console.ReadLine();
@@ -132,12 +170,12 @@ namespace TrabajoPracticoIntegrador
                         }
                         else
                         {
-                            Console.WriteLine("--ERROR--");
+                            Console.WriteLine("--El producto ingresado no cumple con las condiciones para añadirlo a combo--");
                         } 
                     }
                 }
 
-                do//valido que solo ingrese 1 o 2.
+                do
                 {
                     Console.WriteLine("\n-Ingrese 1 para continuar agregando produtos a combo\n");
                     Console.WriteLine("\n-Ingrese 2 si no se desea agregar mas productos a combo\n");
@@ -146,9 +184,12 @@ namespace TrabajoPracticoIntegrador
                 } while (opcion != 1 && opcion != 2);
 
             } while (opcion == 1);
+            do
+            {
+                Console.WriteLine("\nIngrese el descuento: FORMATO EJEMPLO: 0,10\n");
+                descuentoCombo = decimal.Parse(Console.ReadLine());
 
-            Console.WriteLine("\nIngrese el descuento:\n");
-            decimal descuentoCombo = decimal.Parse(Console.ReadLine());
+            } while (descuentoCombo == 0.00M);
 
             foreach (var item in RepositorioGlobal.productosParaCombo)
             {
@@ -157,12 +198,13 @@ namespace TrabajoPracticoIntegrador
 
             decimal precioUnitarioCombo = sumaDePreciosDeCadaCombo - (sumaDePreciosDeCadaCombo * descuentoCombo);
 
-            Console.WriteLine("\nIngrese la cantidad actual de unidades de combo que hay en stock:\n");
-            int cantidadActualCombo = int.Parse(Console.ReadLine());
+            do
+            {
+                Console.WriteLine("\nIngrese la cantidad actual de unidades de combo que hay en stock:\n");
+                cantidadActualCombo = int.Parse(Console.ReadLine());
+            } while (cantidadActualCombo < 0);
 
-
-            
-            DetalleCombo nuevoCombo = new DetalleCombo(codigoCombo, nombreCombo, descuentoCombo, estaDisponible, 
+            DetalleCombo nuevoCombo = new DetalleCombo(codigoCombo, nombreCombo, descuentoCombo, estaDisponible,
                 productosAñadidos, precioUnitarioCombo, cantidadActualCombo);
             RepositorioGlobal.combos.Add(nuevoCombo);
         }
@@ -228,15 +270,25 @@ namespace TrabajoPracticoIntegrador
         {
             foreach (var valorActual in RepositorioGlobal.productos)
             {
-                int codigoProducto = valorActual.codigoProducto;
-                string nombreProducto = valorActual.nombre;
-                decimal precioUnitario = valorActual.precioUnitario;
-                string descripcion = valorActual.descripcion;
+                int codProducto = valorActual.codigoProducto;
+                string nomProducto = valorActual.nombre;
+                decimal precio = valorActual.precioUnitario;
+                string desc = valorActual.descripcion;
                 string color = valorActual.color;
-                int cantidadActual = valorActual.cantidadActual;
+                int stockProducto = valorActual.cantidadActual;
                 string categoria = valorActual.categoria;
+                decimal? precioDosCinco = valorActual.precioRangoDosACinco;
+                decimal? precioSeisDiez = valorActual.precioRangoSeisADiez;
+                decimal? precioDiezMas = valorActual.precioRangoDiezOMas;
+                bool estaOferta = valorActual.estaEnOferta;
+                string desOferta = valorActual.descripcionOferta;
+                decimal? precioOferta = valorActual.precioDeOferta;
+                DateTime? fechaInOferta = valorActual.fechaInicioOferta;
+                DateTime? fechaFinOferta = valorActual.fechaCierreOferta;
 
-                ProductoTeamDos productoTeamDos = new ProductoTeamDos(codigoProducto, nombreProducto, precioUnitario, descripcion, color, cantidadActual, categoria);
+                ProductoTeamDos productoTeamDos = new ProductoTeamDos(codProducto, nomProducto, precio, desc, color, stockProducto,
+                    categoria, precioDosCinco, precioSeisDiez, precioDiezMas, estaOferta, desOferta,
+                    precioOferta, fechaInOferta, fechaFinOferta);
                 RepositorioGlobal.productoTeamDos.Add(productoTeamDos);
             }
             Console.WriteLine("\n--Se creo correctamente el JSON de Producto para el team dos--\n");
@@ -250,15 +302,15 @@ namespace TrabajoPracticoIntegrador
                 decimal precioUnitario = valorActual.precioUnitario;
                 int cantidadActual = valorActual.cantidadActual;
                 bool disponible = valorActual.disponible;
-                decimal precioRangoDosACinco = valorActual.precioRangoDosACinco;
-                decimal precioRangoSeisADiez = valorActual.precioRangoSeisADiez;
-                decimal precioRangoDiezOMas = valorActual.precioRangoDiezOMas;
-                bool estaEnOferta = valorActual.estaEnOferta;
-                decimal? precioDeOferta = valorActual.precioDeOferta;
                 DateTime? fechaInicioOferta = valorActual.fechaInicioOferta;
                 DateTime? fechaCierreOferta = valorActual.fechaCierreOferta;
+                bool estaEnOferta = valorActual.estaEnOferta;
+                decimal? descuentoPorOferta = 0.10M;
+                decimal descuentoRangoDosACinco = 0.03M;
+                decimal descuentoRangoSeisADiez = 0.05M;
+                decimal descuentoRangoDiezOMas = 0.07M;
 
-                ProductoTeamTres productoTeamTres = new ProductoTeamTres(codigoProducto, descripcion, precioUnitario, cantidadActual, disponible, precioRangoDosACinco, precioRangoSeisADiez, precioRangoDiezOMas, estaEnOferta, precioDeOferta, fechaInicioOferta, fechaCierreOferta);
+                ProductoTeamTres productoTeamTres = new ProductoTeamTres(codigoProducto, descripcion, precioUnitario, cantidadActual, disponible, fechaInicioOferta, fechaCierreOferta, estaEnOferta, descuentoPorOferta, descuentoRangoDosACinco, descuentoRangoSeisADiez, descuentoRangoDiezOMas);
                 RepositorioGlobal.productoTeamTres.Add(productoTeamTres);
             }
             foreach (var item in RepositorioGlobal.combos)
@@ -266,17 +318,17 @@ namespace TrabajoPracticoIntegrador
                 int codigoProducto = item.codigoCombo;
                 decimal precioUnitario = item.precioUnitarioCombo;
                 string descripcion = item.descripcion;
-                bool disponible = item.disponibilidadCombo;
                 int cantidadActual = item.cantidadActualCombo;
+                bool disponible = item.disponibilidadCombo;
+                DateTime? fechaInicioOferta = null;
+                DateTime? fechaCierreOferta = null;
+                bool estaEnOferta = false;
+                decimal? precioDeOferta = null;
                 decimal? precioRangoDosACinco = null;
                 decimal? precioRangoSeisADiez = null;
                 decimal? precioRangoDiezOMas = null;
-                bool estaEnOferta = false;
-                decimal? precioDeOferta = null;
-                DateTime? fechaInicioOferta = null;
-                DateTime? fechaCierreOferta = null;
                 
-                ProductoTeamTres detalleComboTeamTres = new ProductoTeamTres(codigoProducto, descripcion, precioUnitario, cantidadActual, disponible, precioRangoDosACinco, precioRangoSeisADiez, precioRangoDiezOMas, estaEnOferta, precioDeOferta, fechaInicioOferta, fechaCierreOferta);
+                ProductoTeamTres detalleComboTeamTres = new ProductoTeamTres(codigoProducto, descripcion, precioUnitario, cantidadActual, disponible, fechaInicioOferta, fechaCierreOferta, estaEnOferta, precioDeOferta, precioRangoDosACinco, precioRangoSeisADiez, precioRangoDiezOMas);
                 RepositorioGlobal.productoTeamTres.Add(detalleComboTeamTres);
             }
             Console.WriteLine("\n--Se creo correctamente el JSON de Producto para el team tres--\n");

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TrabajoPracticoIntegrador
 {
-    class DetalleComboTeamDos
+    public class DetalleComboTeamDos
     {
         public int CodigoCombo { get; set; }
         public string NombreCombo { get; set; }

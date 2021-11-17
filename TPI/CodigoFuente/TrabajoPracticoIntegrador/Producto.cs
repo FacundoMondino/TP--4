@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TrabajoPracticoIntegrador
 {
-    class Producto
+    public class Producto
     {
         public int codigoProducto {get; set;}
         public string nombre { get; set; }

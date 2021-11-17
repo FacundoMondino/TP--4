@@ -6,38 +6,38 @@ using System.Threading.Tasks;
 
 namespace TrabajoPracticoIntegrador
 {
-    class ProductoTeamTres
+    public class ProductoTeamTres
     {
         public int CodigoProducto { get; set; }
         public string Descripcion { get; set; }
         public decimal PrecioUnitario { get; set; }
         public int CantidadActual { get; set; }
         public bool Disponible { get; set; }
-        public decimal? precioRangoDosACinco { get; set; }
-        public decimal? precioRangoSeisADiez { get; set; }
-        public decimal? precioRangoDiezOMas { get; set; }
-        public bool estaEnOferta { get; set; }
-        public decimal? precioDeOferta { get; set; }
         public DateTime? fechaInicioOferta { get; set; }
         public DateTime? fechaCierreOferta { get; set; }
+        public bool estaEnOferta { get; set; }
+        public decimal? descuentoPorOferta { get; set; }
+        public decimal? descuentoRangoDosACinco { get; set; }
+        public decimal? descuentoRangoSeisADiez { get; set; }
+        public decimal? descuentoRangoDiezOMas { get; set; }
 
         public ProductoTeamTres(int CodigoProducto, string Descripcion, decimal PrecioUnitario,
-            int CantidadActual, bool Disponible, decimal? precioRangoDosACinco, decimal? precioRangoSeisADiez, 
-            decimal? precioRangoDiezOMas, bool estaEnOferta, decimal? precioDeOferta, DateTime? fechaInicioOferta, 
-            DateTime? fechaCierreOferta)
+            int CantidadActual, bool Disponible, DateTime? fechaInicioOferta,
+            DateTime? fechaCierreOferta, bool estaEnOferta, decimal? descuentoPorOferta, decimal? descuentoRangoDosACinco, decimal? descuentoRangoSeisADiez, 
+            decimal? descuentoRangoDiezOMas)
         {
             this.CodigoProducto = CodigoProducto;
             this.Descripcion = Descripcion;
             this.PrecioUnitario = PrecioUnitario;
             this.CantidadActual = CantidadActual;
             this.Disponible = Disponible;
-            this.precioRangoDosACinco = precioRangoDosACinco;
-            this.precioRangoSeisADiez = precioRangoSeisADiez;
-            this.precioRangoDiezOMas = precioRangoDiezOMas;
-            this.estaEnOferta = estaEnOferta;
-            this.precioDeOferta = precioDeOferta;
             this.fechaInicioOferta = fechaInicioOferta;
             this.fechaCierreOferta = fechaCierreOferta;
+            this.estaEnOferta = estaEnOferta;
+            this.descuentoPorOferta = descuentoPorOferta;
+            this.descuentoRangoDosACinco = descuentoRangoDosACinco;
+            this.descuentoRangoSeisADiez = descuentoRangoSeisADiez;
+            this.descuentoRangoDiezOMas = descuentoRangoDiezOMas;
         }
     }
 }

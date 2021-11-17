@@ -6,40 +6,40 @@ using System.Threading.Tasks;
 
 namespace TrabajoPracticoIntegrador
 {
-    class DetalleComboTeamTres
+    public class DetalleComboTeamTres
     {
         public int CodigoProducto { get; set; }
         public string Descripcion { get; set; }
         public decimal PrecioUnitario { get; set; }
         public int CantidadActual { get; set; }
-        public bool DisponibilidadComboALaVenta { get; set; }
         public int cantidadActualCombo { get; set; }
-        public decimal? precioRangoDosACinco { get; set; }
-        public decimal? precioRangoSeisADiez { get; set; }
-        public decimal? precioRangoDiezOMas { get; set; }
-        public bool estaEnOferta { get; set; }
-        public decimal? precioDeOferta { get; set; }
+        public bool DisponibilidadComboALaVenta { get; set; }
         public DateTime? fechaInicioOferta { get; set; }
         public DateTime? fechaCierreOferta { get; set; }
+        public bool estaEnOferta { get; set; }
+        public decimal? descuentoPorOferta { get; set; }
+        public decimal? descuentoRangoDosACinco { get; set; }
+        public decimal? descuentoRangoSeisADiez { get; set; }
+        public decimal? descuentoRangoDiezOMas { get; set; }
 
         public DetalleComboTeamTres(int CodigoProducto, string Descripcion, decimal PrecioUnitario, 
-            int CantidadActual, bool DisponibilidadComboALaVenta, int cantidadActualCombo, decimal? precioRangoDosACinco, 
-            decimal? precioRangoSeisADiez, decimal? precioRangoDiezOMas, bool estaEnOferta, decimal? precioDeOferta, 
-            DateTime? fechaInicioOferta, DateTime? fechaCierreOferta)
+            int CantidadActual, int cantidadActualCombo, bool DisponibilidadComboALaVenta, DateTime? fechaInicioOferta, DateTime? fechaCierreOferta, 
+            bool estaEnOferta, decimal? descuentoPorOferta, decimal? descuentoRangoDosACinco,
+            decimal? descuentoRangoSeisADiez, decimal? descuentoRangoDiezOMas)
         {
             this.CodigoProducto = CodigoProducto;
             this.Descripcion = Descripcion;
             this.PrecioUnitario = PrecioUnitario;
             this.CantidadActual = CantidadActual;
-            this.DisponibilidadComboALaVenta = DisponibilidadComboALaVenta;
             this.cantidadActualCombo = cantidadActualCombo;
-            this.precioRangoDosACinco = precioRangoDosACinco;
-            this.precioRangoSeisADiez = precioRangoSeisADiez;
-            this.precioRangoDiezOMas = precioRangoDiezOMas;
-            this.estaEnOferta = estaEnOferta;
-            this.precioDeOferta = precioDeOferta;
+            this.DisponibilidadComboALaVenta = DisponibilidadComboALaVenta;
             this.fechaInicioOferta = fechaInicioOferta;
             this.fechaCierreOferta = fechaCierreOferta;
+            this.estaEnOferta = estaEnOferta;
+            this.descuentoPorOferta = descuentoPorOferta;
+            this.descuentoRangoDosACinco = descuentoRangoDosACinco;
+            this.descuentoRangoSeisADiez = descuentoRangoSeisADiez;
+            this.descuentoRangoDiezOMas = descuentoRangoDiezOMas;
         }
     }
 }
